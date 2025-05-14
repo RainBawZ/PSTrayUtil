@@ -1,2 +1,2 @@
 start notepad.exe
-pwsh -c "& {. '.\Invoke-WindowToTray.ps1' -Name 'Notepad'}
+pwsh -c "& {. '.\Invoke-WindowToTray.ps1' -Name 'Notepad'}"
