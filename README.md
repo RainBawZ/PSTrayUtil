@@ -1,2 +1,2 @@
 # PSTrayUtil
-PowerShell utility to minimize window to the system tray
+PowerShell utility to minimize windows to the system tray
