@@ -2,7 +2,7 @@
 
 Param (
 	[Parameter(Mandatory, Position = 0, ParameterSetName = 'Path')]
-	[ValidateScript({[IO.File]::Exists($_)})]
+	[ValidateScript({[IO.File]::Exists($_) -And [IO.Path]::GetExtension($_) -eq '.exe'})]
 	[String]$Path,
 
 	[Parameter(Mandatory, Position = 0, ParameterSetName = 'Name')]
@@ -21,54 +21,6 @@ Param (
 	[Parameter(Mandatory, ParameterSetName = 'Previous')]
 	[Switch]$Previous
 )
-
-<#Function Set-PriorityClass {
-	[CmdletBinding()]
-	Param (
-		[Parameter(Mandatory, ValueFromPipeline, ParameterSetName = 'Pipeline')]
-		[Diagnostics.Process]$InputObject,
-
-		[Parameter(Mandatory, Position = 0, ParameterSetName = 'Default')]
-		[Diagnostics.Process]$Proc,
-
-		[Parameter(Mandatory, Position = 1, ParameterSetName = 'Default')]
-		[Parameter(Mandatory, Position = 0, ParameterSetName = 'Pipeline')]
-		[Diagnostics.ProcessPriorityClass]$PriorityClass,
-
-		[Parameter(Position = 2, ParameterSetName = 'Default')]
-		[Parameter(Position = 1, ParameterSetName = 'Pipeline')]
-		[ValidateSet('Lower', 'Higher', 'None')]
-		[String]$Allow = 'Lower'
-	)
-
-	Return # Unfinished function
-
-	[Collections.Generic.List[String]]$PriorityClasses = @('Idle', 'BelowNormal', 'Normal', 'AboveNormal', 'High', 'RealTime')
-	$Allow = [Globalization.TextInfo]::ToTitleCase($Allow)
-	Switch ($Allow) {
-		'None'   {$PriorityClass; Break}
-		'Lower'  {[Diagnostics.ProcessPriorityClass]::Idle; Break}
-		'Higher' {[Diagnostics.ProcessPriorityClass]::RealTime; Break}
-		
-		Default  {$_; Break}
-	}
-	If ($Allow -eq '') {Return $PriorityClass}
-
-	If ($InputObject) {[Diagnostics.Process]$Proc = $InputObject}
-
-	If ($PriorityClasses.IndexOf($Proc.PriorityClass) -lt '?') {
-		Throw "Invalid priority class: $PriorityClass`nValid values are: $($PriorityClasses -Join ', ')"
-	}
-	Switch ($Proc.PriorityClass) {
-		'RealTime'    {[Diagnostics.ProcessPriorityClass]::BelowNormal; Break}
-		'High'        {[Diagnostics.ProcessPriorityClass]::BelowNormal; Break}
-		'AboveNormal' {[Diagnostics.ProcessPriorityClass]::BelowNormal; Break}
-		'Normal'      {[Diagnostics.ProcessPriorityClass]::BelowNormal; Break}
-		Default       {$_; Break}
-	}
-	Return
-	
-}#>
 
 [String]$TypeDefinition = @(
 	'using System;',
